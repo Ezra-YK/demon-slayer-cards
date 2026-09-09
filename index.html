@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html> 
+    <head>
+        <title>Demon Slayer Character Cards</title>
+        <style>
+            body {
+                background-color: #121212; 
+                font-family: 'Times New Roman', sans-serif;
+                margin: 0;
+                padding-top: 20px;
+                padding-bottom: 50px;
+            }  
+            
+            /* The New Main Page Heading */
+             .main-title {
+                text-align: center;
+                color: white;
+                font-size: 40px;
+                margin-bottom: 40px;
+                letter-spacing: 2px;
+                text-transform: uppercase;
+                transition: letter-spacing 0.5s ease, text-shadow 0.5s ease;
+                cursor: default;
+            }
+
+             .main-title:hover {
+                letter-spacing: 8px; /* Spreads the letters apart */
+                text-shadow: 0 0 10px white, 0 0 20px white; /* Creates the neon glow */
+            }
+
+            .card-grid {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 40px; 
+                max-width: 1200px;
+                margin: 0 auto; 
+            }
+            
+            .card {
+                background-color: rgb(20, 20, 20);
+                width: 300px;
+                border-radius: 15px; 
+                padding: 20px;
+                text-align: center;
+                transition: transform 0.3s ease, box-shadow 0.3s ease;
+                box-shadow: 0 4px 15px var(--theme); 
+            }
+
+            .card:hover { 
+                transform: translateY(-10px); 
+                box-shadow: 0 15px 30px var(--theme); 
+            }
+
+            .card h1, .card p { color: var(--theme); }
+            .card img { border-color: var(--theme); }
+            .card button { background-color: var(--theme); }
+
+            img {
+                width: 100%;
+                height: 300px; 
+                object-fit: cover; 
+                border-radius: 10px; 
+                border-bottom: 4px solid;
+            }
+
+            h1 { margin-bottom: 5px; font-size: 24px; }
+            p { font-weight: bold; font-size: 14px; }
+
+            button {
+                color: #121212; 
+                border: none;
+                padding: 10px 20px;
+                border-radius: 5px;
+                cursor: pointer;
+                margin-top: 10px;
+                font-weight: bold;
+                transition: 0.2s;
+            }
+            button:hover { filter: brightness(1.2); }
+
+        </style>
+    </head>
+
+    <body>
+        
+        <!-- Added your custom heading here -->
+        <h1 class="main-title">Demon Slayer Character Cards</h1>
+
+        <div class="card-grid">
+            
+            <!-- THE KAMABOKO SQUAD -->
+            <div class="card" style="--theme: #2ecc71;">
+                <h1>Tanjiro Kamado</h1>
+                <img src="img/Tanjiro.jpg" alt="Tanjiro Kamado">
+                <p id="tanjiro-stats">Rank: Kanoe | Style: Water/Sun</p>
+                <!-- Notice how the whole string is passed now -->
+                <button id="tanjiro-btn" onclick="upgradeCharacter('tanjiro', 'Rank: Hashira Level', 'Style: Hinokami Kagura')">Level Up</button>
+            </div>
+
+            <div class="card" style="--theme: #f1c40f;">
+                <h1>Zenitsu Agatsuma</h1>
+                <img src="img/Zenitsu.jpg" alt="Zenitsu Agatsuma">
+                <p id="zenitsu-stats">Rank: Kanoe | Style: Thunder</p>
+                <button id="zenitsu-btn" onclick="upgradeCharacter('zenitsu', 'Rank: Hashira Level', 'Style: 7th Form: Flaming Thunder God')">Level Up</button>
+            </div>
+
+            <div class="card" style="--theme: #3498db;">
+                <h1>Inosuke Hashibira</h1>
+                <img src="img/Inosuke.jpg" alt="Inosuke Hashibira">
+                <p id="inosuke-stats">Rank: Kanoe | Style: Beast</p>
+                <button id="inosuke-btn" onclick="upgradeCharacter('inosuke', 'Rank: Hashira Level', 'Style: Sudden Throwing Strike')">Level Up</button>
+            </div>
+
+            <div class="card" style="--theme: #ff9ff3;">
+                <h1>Nezuko Kamado</h1>
+                <img src="img/Nezuko.jpg" alt="Nezuko Kamado">
+                <p id="nezuko-stats">Rank: Demon | Art: Exploding Blood</p>
+                <button id="nezuko-btn" onclick="upgradeCharacter('nezuko', 'Status: Sun Conqueror', 'Art: Awakened Form')">Level Up</button>
+            </div>
+            
+            <!-- THE HASHIRA -->
+            <div class="card" style="--theme: #0984e3;">
+                <h1>Giyu Tomioka</h1>
+                <img src="img/Giyu.jpg" alt="Giyu Tomioka">
+                <p id="giyu-stats">Title: Water Hashira | Style: Water</p>
+                <button id="giyu-btn" onclick="upgradeCharacter('giyu', 'Title: Marked Hashira', 'Style: 11th Form: Dead Calm')">Level Up</button>
+            </div>
+
+            <div class="card" style="--theme: #e17055;">
+                <h1>Kyojuro Rengoku</h1>
+                <img src="img/Rengoku.jpg" alt="Kyojuro Rengoku">
+                <p id="rengoku-stats">Title: Flame Hashira | Style: Flame</p>
+                <button id="rengoku-btn" onclick="upgradeCharacter('rengoku', 'Status: Legend', 'Style: 9th Form: Rengoku')">Level Up</button>
+            </div>
+
+            <div class="card" style="--theme: #fd79a8;">
+                <h1>Mitsuri Kanroji</h1>
+                <img src="img/Mitsuri.jpg" alt="Mitsuri Kanroji">
+                <p id="mitsuri-stats">Title: Love Hashira | Style: Love</p>
+                <button id="mitsuri-btn" onclick="upgradeCharacter('mitsuri', 'Title: Marked Hashira', 'Style: Muscle Density')">Level Up</button>
+            </div>
+
+            <div class="card" style="--theme: #00cec9;">
+                <h1>Muichiro Tokito</h1>
+                <img src="img/Muichiro Tokito.jpg" alt="Muichiro Tokito">
+                <p id="muichiro-stats">Title: Mist Hashira | Style: Mist</p>
+                <button id="muichiro-btn" onclick="upgradeCharacter('muichiro', 'Title: Marked Hashira', 'Style: 7th Form: Obscuring Clouds')">Level Up</button>
+            </div>
+
+            <div class="card" style="--theme: #6c5ce7;">
+                <h1>Obanai Iguro</h1>
+                <img src="img/Obanai.jpg" alt="Obanai Iguro">
+                <p id="obanai-stats">Title: Serpent Hashira | Style: Serpent</p>
+                <button id="obanai-btn" onclick="upgradeCharacter('obanai', 'Title: Marked Hashira', 'Style: Crimson Red Nichirin')">Level Up</button>
+            </div>
+
+            <div class="card" style="--theme: #55efc4;">
+                <h1>Sanemi Shinazugawa</h1>
+                <img src="img/Sanemi.jpg" alt="Sanemi Shinazugawa">
+                <p id="sanemi-stats">Title: Wind Hashira | Style: Wind</p>
+                <button id="sanemi-btn" onclick="upgradeCharacter('sanemi', 'Title: Marked Hashira', 'Style: Marechi Blood')">Level Up</button>
+            </div>
+
+            <div class="card" style="--theme: #a29bfe;">
+                <h1>Shinobu Kocho</h1>
+                <img src="img/Shinobu.jpg" alt="Shinobu Kocho">
+                <p id="shinobu-stats">Title: Insect Hashira | Style: Insect</p>
+                <button id="shinobu-btn" onclick="upgradeCharacter('shinobu', 'Status: Legend', 'Style: Wisteria Poison Mastery')">Level Up</button>
+            </div>
+
+            <div class="card" style="--theme: #636e72;">
+                <h1>Gyomei Himejima</h1>
+                <img src="img/Gyomei.jpg" alt="Gyomei Himejima">
+                <p id="gyomei-stats">Title: Stone Hashira | Style: Stone</p>
+                <button id="gyomei-btn" onclick="upgradeCharacter('gyomei', 'Title: Marked Hashira', 'Style: Transparent World')">Level Up</button>
+            </div>
+
+            <div class="card" style="--theme: #ff7675;">
+                <h1>Tengen Uzui</h1>
+                <img src="img/Tengen.jpg" alt="Tengen Uzui">
+                <p id="tengen-stats">Title: Sound Hashira | Style: Sound</p>
+                <button id="tengen-btn" onclick="upgradeCharacter('tengen', 'Status: Retired', 'Style: Musical Score Technique')">Level Up</button>
+            </div>
+
+            <!-- THE DEMONS -->
+            <div class="card" style="--theme: #d63031;">
+                <h1>Muzan Kibutsuji</h1>
+                <img src="img/Muzan.jpg" alt="Muzan Kibutsuji">
+                <p id="muzan-stats">Rank: Demon King | Art: Biokinesis</p>
+                <button id="muzan-btn" onclick="upgradeCharacter('muzan', 'Rank: Final Form', 'Art: Whip Combat Form')">Level Up</button>
+            </div>
+
+        </div>
+
+        <script>
+            // We removed the hardcoded "Rank/Title" and let the HTML handle the exact phrasing
+            function upgradeCharacter(characterName, firstPart, secondPart) {
+                document.getElementById(characterName + "-stats").innerText = firstPart + " | " + secondPart;
+                
+                let btn = document.getElementById(characterName + "-btn");
+                btn.innerText = "Fully Awakened";
+                btn.style.backgroundColor = "gold"; 
+                btn.style.color = "black";
+                btn.disabled = true; 
+            }
+        </script>
+    </body>
+</html>
