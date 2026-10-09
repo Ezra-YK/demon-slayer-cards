@@ -1,209 +1,411 @@
 <!DOCTYPE html>
-<html> 
+<html lang="en">
     <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Interactive Demon Slayer character cards built with HTML, CSS 3D transforms, and vanilla JavaScript. Features a custom UI economy system.">
+        <meta name="keywords" content="Demon Slayer, Anime Cards, HTML, CSS, JavaScript, Frontend Development, Yash">
+        <meta name="author" content="Yash">
         <title>Demon Slayer Character Cards</title>
-        <style>
-            body {
-                background-color: #121212; 
-                font-family: 'Times New Roman', sans-serif;
-                margin: 0;
-                padding-top: 20px;
-                padding-bottom: 50px;
-            }  
-            
-            /* The New Main Page Heading */
-             .main-title {
-                text-align: center;
-                color: white;
-                font-size: 40px;
-                margin-bottom: 40px;
-                letter-spacing: 2px;
-                text-transform: uppercase;
-                transition: letter-spacing 0.5s ease, text-shadow 0.5s ease;
-                cursor: default;
-            }
-
-             .main-title:hover {
-                letter-spacing: 8px; /* Spreads the letters apart */
-                text-shadow: 0 0 10px white, 0 0 20px white; /* Creates the neon glow */
-            }
-
-            .card-grid {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 40px; 
-                max-width: 1200px;
-                margin: 0 auto; 
-            }
-            
-            .card {
-                background-color: rgb(20, 20, 20);
-                width: 300px;
-                border-radius: 15px; 
-                padding: 20px;
-                text-align: center;
-                transition: transform 0.3s ease, box-shadow 0.3s ease;
-                box-shadow: 0 4px 15px var(--theme); 
-            }
-
-            .card:hover { 
-                transform: translateY(-10px); 
-                box-shadow: 0 15px 30px var(--theme); 
-            }
-
-            .card h1, .card p { color: var(--theme); }
-            .card img { border-color: var(--theme); }
-            .card button { background-color: var(--theme); }
-
-            img {
-                width: 100%;
-                height: 300px; 
-                object-fit: cover; 
-                border-radius: 10px; 
-                border-bottom: 4px solid;
-            }
-
-            h1 { margin-bottom: 5px; font-size: 24px; }
-            p { font-weight: bold; font-size: 14px; }
-
-            button {
-                color: #121212; 
-                border: none;
-                padding: 10px 20px;
-                border-radius: 5px;
-                cursor: pointer;
-                margin-top: 10px;
-                font-weight: bold;
-                transition: 0.2s;
-            }
-            button:hover { filter: brightness(1.2); }
-
-        </style>
+        <link rel="stylesheet" href="style.css">
     </head>
-
     <body>
-        
-        <!-- Added your custom heading here -->
         <h1 class="main-title">Demon Slayer Character Cards</h1>
+        
+        <!-- Economy & Control Panel -->
+        <div class="economy-panel">
+            <h2 id="currency-display">Slayer Marks: 0</h2>
+            <button id="train-btn" class="action-btn">Train (+25 Marks)</button>
+        </div>
+
+        <div class="controls">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="kamaboko">Kamaboko Squad</button>
+            <button class="filter-btn" data-filter="hashira">Hashira</button>
+            <button class="filter-btn" data-filter="demon">Demons</button>
+            <button id="reset-btn" class="reset-btn">Revert All</button>
+        </div>
 
         <div class="card-grid">
-            
             <!-- THE KAMABOKO SQUAD -->
-            <div class="card" style="--theme: #2ecc71;">
-                <h1>Tanjiro Kamado</h1>
-                <img src="img/Tanjiro.jpg" alt="Tanjiro Kamado">
-                <p id="tanjiro-stats">Rank: Kanoe | Style: Water/Sun</p>
-                <!-- Notice how the whole string is passed now -->
-                <button id="tanjiro-btn" onclick="upgradeCharacter('tanjiro', 'Rank: Hashira Level', 'Style: Hinokami Kagura')">Level Up</button>
+            <div class="card" data-category="kamaboko" style="--theme: #2ecc71;">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <h1>Tanjiro Kamado</h1>
+                        <img src="img/Tanjiro.jpg" alt="Tanjiro Kamado">
+                    </div>
+                    <div class="card-back">
+                        <h2>Character Bio</h2>
+                        <h4 class="bio-text">A kind-hearted boy who became a Demon Slayer to cure his sister. Master of Water Breathing and the Hinokami Kagura.</h4>
+                        <p class="stats" data-original-text="Rank: Kanoe | Style: Water/Sun" data-upgrade-text="Rank: Hashira Level | Style: Hinokami Kagura">Rank: Kanoe | Style: Water/Sun</p>
+                        <button class="upgrade-btn">Level Up</button>
+                    </div>
+                </div>
             </div>
 
-            <div class="card" style="--theme: #f1c40f;">
-                <h1>Zenitsu Agatsuma</h1>
-                <img src="img/Zenitsu.jpg" alt="Zenitsu Agatsuma">
-                <p id="zenitsu-stats">Rank: Kanoe | Style: Thunder</p>
-                <button id="zenitsu-btn" onclick="upgradeCharacter('zenitsu', 'Rank: Hashira Level', 'Style: 7th Form: Flaming Thunder God')">Level Up</button>
+            <div class="card" data-category="kamaboko" style="--theme: #f1c40f;">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <h1>Zenitsu Agatsuma</h1>
+                        <img src="img/Zenitsu.jpg" alt="Zenitsu Agatsuma">
+                    </div>
+                    <div class="card-back">
+                        <h2>Character Bio</h2>
+                        <h4 class="bio-text">A cowardly but gifted swordsman who unleashes devastating Thunder Breathing strikes while asleep.</h4>
+                        <p class="stats" data-original-text="Rank: Kanoe | Style: Thunder" data-upgrade-text="Rank: Hashira Level | Style: 7th Form: Flaming Thunder God">Rank: Kanoe | Style: Thunder</p>
+                        <button class="upgrade-btn">Level Up</button>
+                    </div>
+                </div>
             </div>
 
-            <div class="card" style="--theme: #3498db;">
-                <h1>Inosuke Hashibira</h1>
-                <img src="img/Inosuke.jpg" alt="Inosuke Hashibira">
-                <p id="inosuke-stats">Rank: Kanoe | Style: Beast</p>
-                <button id="inosuke-btn" onclick="upgradeCharacter('inosuke', 'Rank: Hashira Level', 'Style: Sudden Throwing Strike')">Level Up</button>
+            <div class="card" data-category="kamaboko" style="--theme: #3498db;">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <h1>Inosuke Hashibira</h1>
+                        <img src="img/Inosuke.jpg" alt="Inosuke Hashibira">
+                    </div>
+                    <div class="card-back">
+                        <h2>Character Bio</h2>
+                        <h4 class="bio-text">A wild, boar-headed warrior who fights with self-taught Beast Breathing and dual serrated swords.</h4>
+                        <p class="stats" data-original-text="Rank: Kanoe | Style: Beast" data-upgrade-text="Rank: Hashira Level | Style: Sudden Throwing Strike">Rank: Kanoe | Style: Beast</p>
+                        <button class="upgrade-btn">Level Up</button>
+                    </div>
+                </div>
             </div>
 
-            <div class="card" style="--theme: #ff9ff3;">
-                <h1>Nezuko Kamado</h1>
-                <img src="img/Nezuko.jpg" alt="Nezuko Kamado">
-                <p id="nezuko-stats">Rank: Demon | Art: Exploding Blood</p>
-                <button id="nezuko-btn" onclick="upgradeCharacter('nezuko', 'Status: Sun Conqueror', 'Art: Awakened Form')">Level Up</button>
+            <div class="card" data-category="kamaboko" style="--theme: #ff9ff3;">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <h1>Nezuko Kamado</h1>
+                        <img src="img/Nezuko.jpg" alt="Nezuko Kamado">
+                    </div>
+                    <div class="card-back">
+                        <h2>Character Bio</h2>
+                        <h4 class="bio-text">Tanjiro's younger sister, turned into a demon but retains her humanity, fighting with the Exploding Blood art.</h4>
+                        <p class="stats" data-original-text="Rank: Demon | Art: Exploding Blood" data-upgrade-text="Status: Sun Conqueror | Art: Awakened Form">Rank: Demon | Art: Exploding Blood</p>
+                        <button class="upgrade-btn">Level Up</button>
+                    </div>
+                </div>
             </div>
             
-            <!-- THE HASHIRA -->
-            <div class="card" style="--theme: #0984e3;">
-                <h1>Giyu Tomioka</h1>
-                <img src="img/Giyu.jpg" alt="Giyu Tomioka">
-                <p id="giyu-stats">Title: Water Hashira | Style: Water</p>
-                <button id="giyu-btn" onclick="upgradeCharacter('giyu', 'Title: Marked Hashira', 'Style: 11th Form: Dead Calm')">Level Up</button>
+            <!-- THE HASHIRA & CORPS -->
+            <div class="card" data-category="hashira" style="--theme: #dfe6e9;">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <h1>Kagaya Ubuyashiki</h1>
+                        <img src="img/Kagaya.jpg" alt="Kagaya Ubuyashiki">
+                    </div>
+                    <div class="card-back">
+                        <h2>Character Bio</h2>
+                        <h4 class="bio-text">The 97th leader of the Demon Slayer Corps, highly respected and bearing a terrible family curse.</h4>
+                        <p class="stats" data-original-text="Title: Oyakata-sama | Status: Corps Leader" data-upgrade-text="Status: The Decoy | Tactic: Final Explosion">Title: Oyakata-sama | Status: Corps Leader</p>
+                        <button class="upgrade-btn">Level Up</button>
+                    </div>
+                </div>
             </div>
 
-            <div class="card" style="--theme: #e17055;">
-                <h1>Kyojuro Rengoku</h1>
-                <img src="img/Rengoku.jpg" alt="Kyojuro Rengoku">
-                <p id="rengoku-stats">Title: Flame Hashira | Style: Flame</p>
-                <button id="rengoku-btn" onclick="upgradeCharacter('rengoku', 'Status: Legend', 'Style: 9th Form: Rengoku')">Level Up</button>
+            <div class="card" data-category="hashira" style="--theme: #636e72;">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <h1>Gyomei Himejima</h1>
+                        <img src="img/Gyomei.jpg" alt="Gyomei Himejima">
+                    </div>
+                    <div class="card-back">
+                        <h2>Character Bio</h2>
+                        <h4 class="bio-text">The towering, blind Stone Hashira, universally recognized as the physically strongest warrior in the Corps.</h4>
+                        <p class="stats" data-original-text="Title: Stone Hashira | Style: Stone" data-upgrade-text="Title: Marked Hashira | Style: Transparent World">Title: Stone Hashira | Style: Stone</p>
+                        <button class="upgrade-btn">Level Up</button>
+                    </div>
+                </div>
             </div>
 
-            <div class="card" style="--theme: #fd79a8;">
-                <h1>Mitsuri Kanroji</h1>
-                <img src="img/Mitsuri.jpg" alt="Mitsuri Kanroji">
-                <p id="mitsuri-stats">Title: Love Hashira | Style: Love</p>
-                <button id="mitsuri-btn" onclick="upgradeCharacter('mitsuri', 'Title: Marked Hashira', 'Style: Muscle Density')">Level Up</button>
+            <div class="card" data-category="hashira" style="--theme: #55efc4;">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <h1>Sanemi Shinazugawa</h1>
+                        <img src="img/Sanemi.jpg" alt="Sanemi Shinazugawa">
+                    </div>
+                    <div class="card-back">
+                        <h2>Character Bio</h2>
+                        <h4 class="bio-text">The aggressive Wind Hashira bearing a rare Marechi blood type that fatally intoxicates demons.</h4>
+                        <p class="stats" data-original-text="Title: Wind Hashira | Style: Wind" data-upgrade-text="Title: Marked Hashira | Style: Marechi Blood">Title: Wind Hashira | Style: Wind</p>
+                        <button class="upgrade-btn">Level Up</button>
+                    </div>
+                </div>
             </div>
 
-            <div class="card" style="--theme: #00cec9;">
-                <h1>Muichiro Tokito</h1>
-                <img src="img/Muichiro Tokito.jpg" alt="Muichiro Tokito">
-                <p id="muichiro-stats">Title: Mist Hashira | Style: Mist</p>
-                <button id="muichiro-btn" onclick="upgradeCharacter('muichiro', 'Title: Marked Hashira', 'Style: 7th Form: Obscuring Clouds')">Level Up</button>
+            <div class="card" data-category="hashira" style="--theme: #0984e3;">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <h1>Giyu Tomioka</h1>
+                        <img src="img/Giyu.jpg" alt="Giyu Tomioka">
+                    </div>
+                    <div class="card-back">
+                        <h2>Character Bio</h2>
+                        <h4 class="bio-text">The stoic Water Hashira who first recruited Tanjiro. Master of the defensive 11th Form: Dead Calm.</h4>
+                        <p class="stats" data-original-text="Title: Water Hashira | Style: Water" data-upgrade-text="Title: Marked Hashira | Style: 11th Form: Dead Calm">Title: Water Hashira | Style: Water</p>
+                        <button class="upgrade-btn">Level Up</button>
+                    </div>
+                </div>
             </div>
 
-            <div class="card" style="--theme: #6c5ce7;">
-                <h1>Obanai Iguro</h1>
-                <img src="img/Obanai.jpg" alt="Obanai Iguro">
-                <p id="obanai-stats">Title: Serpent Hashira | Style: Serpent</p>
-                <button id="obanai-btn" onclick="upgradeCharacter('obanai', 'Title: Marked Hashira', 'Style: Crimson Red Nichirin')">Level Up</button>
+            <div class="card" data-category="hashira" style="--theme: #6c5ce7;">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <h1>Obanai Iguro</h1>
+                        <img src="img/Obanai.jpg" alt="Obanai Iguro">
+                    </div>
+                    <div class="card-back">
+                        <h2>Character Bio</h2>
+                        <h4 class="bio-text">The strict Serpent Hashira who fights with a twisting blade alongside his snake companion, Kaburamaru.</h4>
+                        <p class="stats" data-original-text="Title: Serpent Hashira | Style: Serpent" data-upgrade-text="Title: Marked Hashira | Style: Crimson Red Nichirin">Title: Serpent Hashira | Style: Serpent</p>
+                        <button class="upgrade-btn">Level Up</button>
+                    </div>
+                </div>
             </div>
 
-            <div class="card" style="--theme: #55efc4;">
-                <h1>Sanemi Shinazugawa</h1>
-                <img src="img/Sanemi.jpg" alt="Sanemi Shinazugawa">
-                <p id="sanemi-stats">Title: Wind Hashira | Style: Wind</p>
-                <button id="sanemi-btn" onclick="upgradeCharacter('sanemi', 'Title: Marked Hashira', 'Style: Marechi Blood')">Level Up</button>
+            <div class="card" data-category="hashira" style="--theme: #e17055;">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <h1>Kyojuro Rengoku</h1>
+                        <img src="img/Rengoku.jpg" alt="Kyojuro Rengoku">
+                    </div>
+                    <div class="card-back">
+                        <h2>Character Bio</h2>
+                        <h4 class="bio-text">The passionate and powerful Flame Hashira with an unyielding moral compass and burning spirit.</h4>
+                        <p class="stats" data-original-text="Title: Flame Hashira | Style: Flame" data-upgrade-text="Status: Legend | Style: 9th Form: Rengoku">Title: Flame Hashira | Style: Flame</p>
+                        <button class="upgrade-btn">Level Up</button>
+                    </div>
+                </div>
             </div>
 
-            <div class="card" style="--theme: #a29bfe;">
-                <h1>Shinobu Kocho</h1>
-                <img src="img/Shinobu.jpg" alt="Shinobu Kocho">
-                <p id="shinobu-stats">Title: Insect Hashira | Style: Insect</p>
-                <button id="shinobu-btn" onclick="upgradeCharacter('shinobu', 'Status: Legend', 'Style: Wisteria Poison Mastery')">Level Up</button>
+            <div class="card" data-category="hashira" style="--theme: #00cec9;">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <h1>Muichiro Tokito</h1>
+                        <img src="img/Muichiro Tokito.jpg" alt="Muichiro Tokito">
+                    </div>
+                    <div class="card-back">
+                        <h2>Character Bio</h2>
+                        <h4 class="bio-text">The prodigious young Mist Hashira who achieved his elite rank in just two months of training.</h4>
+                        <p class="stats" data-original-text="Title: Mist Hashira | Style: Mist" data-upgrade-text="Title: Marked Hashira | Style: 7th Form: Obscuring Clouds">Title: Mist Hashira | Style: Mist</p>
+                        <button class="upgrade-btn">Level Up</button>
+                    </div>
+                </div>
             </div>
 
-            <div class="card" style="--theme: #636e72;">
-                <h1>Gyomei Himejima</h1>
-                <img src="img/Gyomei.jpg" alt="Gyomei Himejima">
-                <p id="gyomei-stats">Title: Stone Hashira | Style: Stone</p>
-                <button id="gyomei-btn" onclick="upgradeCharacter('gyomei', 'Title: Marked Hashira', 'Style: Transparent World')">Level Up</button>
+            <div class="card" data-category="hashira" style="--theme: #fd79a8;">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <h1>Mitsuri Kanroji</h1>
+                        <img src="img/Mitsuri.jpg" alt="Mitsuri Kanroji">
+                    </div>
+                    <div class="card-back">
+                        <h2>Character Bio</h2>
+                        <h4 class="bio-text">The cheerful Love Hashira possessing unique, superhuman muscle density and a whip-like nichirin blade.</h4>
+                        <p class="stats" data-original-text="Title: Love Hashira | Style: Love" data-upgrade-text="Title: Marked Hashira | Style: Muscle Density">Title: Love Hashira | Style: Love</p>
+                        <button class="upgrade-btn">Level Up</button>
+                    </div>
+                </div>
             </div>
 
-            <div class="card" style="--theme: #ff7675;">
-                <h1>Tengen Uzui</h1>
-                <img src="img/Tengen.jpg" alt="Tengen Uzui">
-                <p id="tengen-stats">Title: Sound Hashira | Style: Sound</p>
-                <button id="tengen-btn" onclick="upgradeCharacter('tengen', 'Status: Retired', 'Style: Musical Score Technique')">Level Up</button>
+            <div class="card" data-category="hashira" style="--theme: #ff7675;">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <h1>Tengen Uzui</h1>
+                        <img src="img/Tengen.jpg" alt="Tengen Uzui">
+                    </div>
+                    <div class="card-back">
+                        <h2>Character Bio</h2>
+                        <h4 class="bio-text">The flamboyant Sound Hashira and former shinobi who fights with explosive dual cleavers.</h4>
+                        <p class="stats" data-original-text="Title: Sound Hashira | Style: Sound" data-upgrade-text="Status: Retired | Style: Musical Score Technique">Title: Sound Hashira | Style: Sound</p>
+                        <button class="upgrade-btn">Level Up</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" data-category="hashira" style="--theme: #a29bfe;">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <h1>Shinobu Kocho</h1>
+                        <img src="img/Shinobu.jpg" alt="Shinobu Kocho">
+                    </div>
+                    <div class="card-back">
+                        <h2>Character Bio</h2>
+                        <h4 class="bio-text">The perpetually smiling Insect Hashira who compensates for physical weakness with lethal wisteria poisons.</h4>
+                        <p class="stats" data-original-text="Title: Insect Hashira | Style: Insect" data-upgrade-text="Status: Legend | Style: Wisteria Poison Mastery">Title: Insect Hashira | Style: Insect</p>
+                        <button class="upgrade-btn">Level Up</button>
+                    </div>
+                </div>
             </div>
 
             <!-- THE DEMONS -->
-            <div class="card" style="--theme: #d63031;">
-                <h1>Muzan Kibutsuji</h1>
-                <img src="img/Muzan.jpg" alt="Muzan Kibutsuji">
-                <p id="muzan-stats">Rank: Demon King | Art: Biokinesis</p>
-                <button id="muzan-btn" onclick="upgradeCharacter('muzan', 'Rank: Final Form', 'Art: Whip Combat Form')">Level Up</button>
+            <div class="card" data-category="demon" style="--theme: #d63031;">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <h1>Muzan Kibutsuji</h1>
+                        <img src="img/Muzan.jpg" alt="Muzan Kibutsuji">
+                    </div>
+                    <div class="card-back">
+                        <h2>Character Bio</h2>
+                        <h4 class="bio-text">The original and most powerful demon, possessing immense biokinetic abilities and utter ruthlessness.</h4>
+                        <p class="stats" data-original-text="Rank: Demon King | Art: Biokinesis" data-upgrade-text="Rank: Final Form | Art: Whip Combat Form">Rank: Demon King | Art: Biokinesis</p>
+                        <button class="upgrade-btn">Level Up</button>
+                    </div>
+                </div>
             </div>
 
+            <div class="card" data-category="demon" style="--theme: #8e44ad;">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <h1>Kokushibo</h1>
+                        <img src="img/Kokushibo.jpg" alt="Kokushibo">
+                    </div>
+                    <div class="card-back">
+                        <h2>Character Bio</h2>
+                        <h4 class="bio-text">Upper Moon 1 and a former Demon Slayer from the Sengoku era, wielding the lethal Moon Breathing style.</h4>
+                        <p class="stats" data-original-text="Rank: Upper Moon 1 | Art: Crescent Moon Blades" data-upgrade-text="Form: Demonic Transformation | Art: Moon Breathing">Rank: Upper Moon 1 | Art: Crescent Moon Blades</p>
+                        <button class="upgrade-btn">Level Up</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" data-category="demon" style="--theme: #74b9ff;">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <h1>Doma</h1>
+                        <img src="img/Doma.jpg" alt="Doma">
+                    </div>
+                    <div class="card-back">
+                        <h2>Character Bio</h2>
+                        <h4 class="bio-text">Upper Moon 2, a psychopathic cult leader with devastating cryokinesis abilities and a total lack of empathy.</h4>
+                        <p class="stats" data-original-text="Rank: Upper Moon 2 | Art: Cryokinesis" data-upgrade-text="Form: Ice Bodhisattva | Art: Frozen Lotus">Rank: Upper Moon 2 | Art: Cryokinesis</p>
+                        <button class="upgrade-btn">Level Up</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" data-category="demon" style="--theme: #ff7675;">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <h1>Akaza</h1>
+                        <img src="img/Akaza.jpg" alt="Akaza">
+                    </div>
+                    <div class="card-back">
+                        <h2>Character Bio</h2>
+                        <h4 class="bio-text">Upper Moon 3, a martial arts supreme who respects absolute strength above all else in battle.</h4>
+                        <p class="stats" data-original-text="Rank: Upper Moon 3 | Art: Shockwave Generation" data-upgrade-text="Form: Compass Needle | Art: Annihilation Type">Rank: Upper Moon 3 | Art: Shockwave Generation</p>
+                        <button class="upgrade-btn">Level Up</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" data-category="demon" style="--theme: #b33939;">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <h1>Hantengu</h1>
+                        <img src="img/Hantengu.jpg" alt="Hantengu">
+                    </div>
+                    <div class="card-back">
+                        <h2>Character Bio</h2>
+                        <h4 class="bio-text">Upper Moon 4, a cowardly demon who manifests his immense power by splitting into emotional clones.</h4>
+                        <p class="stats" data-original-text="Rank: Upper Moon 4 | Art: Emotion Manifestation" data-upgrade-text="Form: Zohakuten | Art: Wooden Dragons">Rank: Upper Moon 4 | Art: Emotion Manifestation</p>
+                        <button class="upgrade-btn">Level Up</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" data-category="demon" style="--theme: #00b894;">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <h1>Gyokko</h1>
+                        <img src="img/Gyokko.jpg" alt="Gyokko">
+                    </div>
+                    <div class="card-back">
+                        <h2>Character Bio</h2>
+                        <h4 class="bio-text">Upper Moon 5, a twisted and arrogant artist who fights using morbid porcelain vases and water manipulation.</h4>
+                        <p class="stats" data-original-text="Rank: Upper Moon 5 | Art: Porcelain Vases" data-upgrade-text="Form: True Form | Art: Killer Fish Scales">Rank: Upper Moon 5 | Art: Porcelain Vases</p>
+                        <button class="upgrade-btn">Level Up</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" data-category="demon" style="--theme: #55efc4;">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <h1>Gyutaro & Daki</h1>
+                        <img src="img/Gyutaro.jpg" alt="Gyutaro and Daki">
+                    </div>
+                    <div class="card-back">
+                        <h2>Character Bio</h2>
+                        <h4 class="bio-text">Upper Moon 6, a sibling duo sharing one rank, wielding blood sickles and razor-sharp obi sashes.</h4>
+                        <p class="stats" data-original-text="Rank: Upper Moon 6 | Art: Blood Sickles & Obi" data-upgrade-text="Form: Merged Power | Art: Rotating Circular Slashes">Rank: Upper Moon 6 | Art: Blood Sickles & Obi</p>
+                        <button class="upgrade-btn">Level Up</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" data-category="demon" style="--theme: #a29bfe;">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <h1>Tamayo</h1>
+                        <img src="img/Tamayo.jpg" alt="Tamayo">
+                    </div>
+                    <div class="card-back">
+                        <h2>Character Bio</h2>
+                        <h4 class="bio-text">A highly skilled doctor and fugitive demon working tirelessly to destroy Muzan through medical research.</h4>
+                        <p class="stats" data-original-text="Rank: Fugitive Demon | Art: Blood Bewitchment" data-upgrade-text="Status: Master Medic | Art: Anti-Kibutsuji Drug">Rank: Fugitive Demon | Art: Blood Bewitchment</p>
+                        <button class="upgrade-btn">Level Up</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" data-category="demon" style="--theme: #74b9ff;">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <h1>Yushiro</h1>
+                        <img src="img/Yushiro.jpg" alt="Yushiro">
+                    </div>
+                    <div class="card-back">
+                        <h2>Character Bio</h2>
+                        <h4 class="bio-text">Tamayo's fiercely loyal assistant and the only demon she has ever successfully created.</h4>
+                        <p class="stats" data-original-text="Rank: Demon Assistant | Art: Blindfold" data-upgrade-text="Status: Infinity Castle Navigator | Art: Mind Control">Rank: Demon Assistant | Art: Blindfold</p>
+                        <button class="upgrade-btn">Level Up</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" data-category="demon" style="--theme: #fab1a0;">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <h1>Nakime</h1>
+                        <img src="img/Nakime.jpg" alt="Nakime">
+                    </div>
+                    <div class="card-back">
+                        <h2>Character Bio</h2>
+                        <h4 class="bio-text">The mysterious Biwa Demon who flawlessly controls the complex spatial layout of the Infinity Castle.</h4>
+                        <p class="stats" data-original-text="Rank: Biwa Demon | Art: Infinity Castle" data-upgrade-text="Rank: Upper Moon 4 | Art: Spatial Manipulation">Rank: Biwa Demon | Art: Infinity Castle</p>
+                        <button class="upgrade-btn">Level Up</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" data-category="demon" style="--theme: #ffeaa7;">
+                <div class="card-inner">
+                    <div class="card-front">
+                        <h1>Kaigaku</h1>
+                        <img src="img/Kaigaku.jpg" alt="Kaigaku">
+                    </div>
+                    <div class="card-back">
+                        <h2>Character Bio</h2>
+                        <h4 class="bio-text">A former Thunder Breathing student who selfishly betrayed the Corps to become the new Upper Moon 6.</h4>
+                        <p class="stats" data-original-text="Rank: Former Tsuguko | Style: Thunder" data-upgrade-text="Rank: Upper Moon 6 | Art: Black Lightning">Rank: Former Tsuguko | Style: Thunder</p>
+                        <button class="upgrade-btn">Level Up</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <script>
-            // We removed the hardcoded "Rank/Title" and let the HTML handle the exact phrasing
-            function upgradeCharacter(characterName, firstPart, secondPart) {
-                document.getElementById(characterName + "-stats").innerText = firstPart + " | " + secondPart;
-                
-                let btn = document.getElementById(characterName + "-btn");
-                btn.innerText = "Fully Awakened";
-                btn.style.backgroundColor = "gold"; 
-                btn.style.color = "black";
-                btn.disabled = true; 
-            }
-        </script>
+        <script src="script.js"></script>
     </body>
 </html>
