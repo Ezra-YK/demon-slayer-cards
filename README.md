@@ -1,1 +1,1 @@
-Check this for the reference https://ezra-yk.github.io/demon-slayer-cards/
+Check this for the reference (https://demon-slayer-cards.vercel.app/)
