@@ -1,8 +1,24 @@
 body {
-    /* Keep your existing rules, just add these three: */
+    background-color: #121212; 
+    font-family: 'Times New Roman', sans-serif;
+    margin: 0;
+    padding-top: 20px;
+    padding-bottom: 50px;
+    /* REMOVED: background-image, background-size, background-attachment */
+}
+
+/* ADD THIS NEW BLOCK: Fixes the mobile scroll jitter */
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
     background-image: url('img/bg.jpg');
     background-size: cover;
-    background-attachment: fixed; 
+    background-position: center;
+    z-index: -1; /* Keeps the background behind everything else */
 }
 
 .main-title {
